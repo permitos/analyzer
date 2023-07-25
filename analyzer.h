@@ -27,6 +27,9 @@ class PackagesAnalyzer {
   
   json::value getBranch(string_t nameBranch); // getting branch handles by name
   
+  void initializeOutputStructure_DifferentPackages(json::value firstBranch, json::value secondBranch, string_t nameFieldPackages);
+  void initializeOutputStructure_DifferentPackages(bool isFirst);
+  
 public:
 
   void initializeBranches(string_t fisrtNameBranch, string_t secondNameBranch); // branch handles initialization
