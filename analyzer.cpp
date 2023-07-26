@@ -49,12 +49,51 @@ json::value PackagesAnalyzer::getBranch(string_t nameBranch) {
   return jv.get();
 }
 
+void PackagesAnalyzer::initializeOutputStructure() {
+
+  cout << "Performing the first step of the analysis. Step 1/3" << endl;
+  initializeOutputStructure_DifferentPackages(true);
+  
+  cout << "Performing the second step of the analysis. Step 2/3" << endl;
+  initializeOutputStructure_DifferentPackages(false);
+  
+  cout << "Performing the first step of the analysis. Step 3/3" << endl;
+  initializeOutputStructure_ReleaseVersion();
+  
+  cout << "Data analysis successfully completed." << endl;
+}
+
 void PackagesAnalyzer::initializeOutputStructure_DifferentPackages(bool isFirst) {
 
   if(isFirst)
     initializeOutputStructure_DifferentPackages(_jvFirstBranch, _jvSecondBranch, "first_packages");
   else
     initializeOutputStructure_DifferentPackages(_jvSecondBranch, _jvFirstBranch, "second_packages");
+}
+
+void PackagesAnalyzer::initializeOutputStructure_ReleaseVersion() {
+  
+  auto packagesFirst = _jvFirstBranch.at("packages").as_array();
+  auto packagesSecond = _jvSecondBranch.at("packages").as_array();
+  map<string_t, json::value> jvSecondMap;
+  vector<string_t> jvFieldsName = {"name", "arch"};
+  vector<string_t> jvFieldsVersion = {"release", "version"};
+  
+  for(json::value jv : packagesSecond)
+    jvSecondMap[getDescriptionPackage(jvFieldsName, jv)] = jv;
+    
+  for (json::value jv : packagesFirst) {
+  
+    string_t nameFirstPackage = getDescriptionPackage(jvFieldsName, jv);
+      
+    if (jvSecondMap.find(nameFirstPackage) != jvSecondMap.end()) {
+         
+    json::value secondPackage = jvSecondMap[nameFirstPackage];
+        
+    if(getDescriptionPackage(jvFieldsVersion, jv) > getDescriptionPackage(jvFieldsVersion, secondPackage)) 
+      _jvOutput["third_packages"][_jvOutput["third_packages"].size()] = jv;
+    }
+  }
 }
 
 void PackagesAnalyzer::initializeOutputStructure_DifferentPackages(json::value firstBranch, json::value secondBranch, string_t nameFieldPackages) {
@@ -64,13 +103,24 @@ void PackagesAnalyzer::initializeOutputStructure_DifferentPackages(json::value f
   map<string_t, json::value> jvSecondMap;
   vector<string_t> jvFields = {"name", "arch", "release", "version"};
   
-  // ADD METHOD getDescriptionPackage(vector<string_t>, json::value)
-  
-  /*for(json::value jv : packagesSecond)
+  for(json::value jv : packagesSecond)
     jvSecondMap[getDescriptionPackage(jvFields, jv)] = jv;
     
   for (json::value jv : packagesFirst) {
       if (jvSecondMap.find(getDescriptionPackage(jvFields, jv)) == jvSecondMap.end()) 
         _jvOutput[nameFieldPackages][_jvOutput[nameFieldPackages].size()] = jv;
-  }*/
+  }
 }
+
+string_t PackagesAnalyzer::getDescriptionPackage(vector<string_t> fields, json::value jv) {
+
+  string_t description = "";
+  
+  for(string_t field: fields) {
+    description += jv.at(field).as_string() + " ";
+  }
+  
+  return description;
+}
+
+
