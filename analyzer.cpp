@@ -123,4 +123,21 @@ string_t PackagesAnalyzer::getDescriptionPackage(vector<string_t> fields, json::
   return description;
 }
 
+void PackagesAnalyzer::outInFile() {
+
+  cout << "The analyzed data is uploaded to a file..." << endl;
+
+  ofstream out("result_analysis_packages.txt");
+  
+  if(out.is_open()) {
+  
+    out << _jvOutput.serialize() << endl;
+    cout << "Packet analysis results were written to file \"result_analysis_packages.txt\"" << endl;
+  }
+  else
+    cout << "Failed to write to file!" << endl;
+  
+  out.close();
+}
+
 

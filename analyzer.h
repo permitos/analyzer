@@ -7,6 +7,7 @@
 #include <cpprest/uri.h>
 #include <cpprest/json.h>
 
+using namespace utility;
 using namespace web; 
 using namespace web::http;
 using namespace web::http::client; 
@@ -36,6 +37,7 @@ public:
 
   void initializeBranches(string_t fisrtNameBranch, string_t secondNameBranch); // branch handles initialization
   void initializeOutputStructure();
+  void outInFile();
   
   PackagesAnalyzer();
   PackagesAnalyzer(string_t fisrtNameBranch, string_t secondNameBranch);
