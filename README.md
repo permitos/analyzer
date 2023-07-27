@@ -25,6 +25,7 @@ make
 Finally copy the generated shared library as follows:
 ```
 sudo cp libanalyzer.so /usr/lib
+sudo ldconfig
 ```
 
 Run the utility by executing the command:
