@@ -12,14 +12,14 @@ In the output JSON file, the descriptions "first-packages", "second-packages" an
 
 ## Installation
 
-# Ubuntu/Debian
+### Ubuntu/Debian
 
 In order to run this utility you must first install cpprestsdk:
 ```
 sudo apt-get install libcpprest-dev
 ```
 
-# Deepin
+### Deepin
 
 Follow to install these packages:
 ```
