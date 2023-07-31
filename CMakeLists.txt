@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0)
 project(libanalyzer) 
-find_package(cpprestsdk REQUIRED)                
+find_package(cpprestsdk REQUIRED
+             OpenSSL REQUIRED)                
 add_library(analyzer SHARED analyzer.cpp)   
 add_executable(main main.cpp)           
 include (GenerateExportHeader)          
@@ -10,4 +11,5 @@ GENERATE_EXPORT_HEADER(analyzer
     EXPORT_FILE_NAME analyzer_EXPORTS.h
     STATIC_DEFINE SHARED_EXPORTS_BUILT_AS_STATIC)
 target_link_libraries(main analyzer
-                      analyzer cpprestsdk::cpprest)
+                      analyzer cpprestsdk::cpprest
+                      analyzer OpenSSL::SSL)
