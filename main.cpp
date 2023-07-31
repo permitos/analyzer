@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
   cout << "Enter the name of the first branch:" << endl;
   getline(cin, firstBranchName);
   
-  cout << "Enter the name of the first branch:" << endl;
+  cout << "Enter the name of the second branch:" << endl;
   getline(cin, secondBranchName);	
 	
   PackagesAnalyzer analyzer(firstBranchName, secondBranchName);

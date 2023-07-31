@@ -57,7 +57,7 @@ void PackagesAnalyzer::initializeOutputStructure() {
   cout << "Performing the second step of the analysis. Step 2/3" << endl;
   initializeOutputStructure_DifferentPackages(false);
   
-  cout << "Performing the first step of the analysis. Step 3/3" << endl;
+  cout << "Performing the third step of the analysis. Step 3/3" << endl;
   initializeOutputStructure_ReleaseVersion();
   
   cout << "Data analysis successfully completed." << endl;
